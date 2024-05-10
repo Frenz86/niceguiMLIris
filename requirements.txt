@@ -5,4 +5,5 @@ uvicorn[standard]
 scalar-fastapi
 scikit-learn
 streamlit
+nicegui
 
