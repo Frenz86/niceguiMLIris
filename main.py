@@ -25,14 +25,15 @@ classes = {
             2: 'virginica',
             }
 
-MODEL_PATH1 = 'iris.pkl'
-MODEL_PATH2 = ''  # to load different models
+MODEL_PATH1 = Path('iris.pkl')
+MODEL_PATH2 = Path('')  # to load different models
 model = {}
 
 
 @asynccontextmanager  # @app.on_event is deprecated
 async def mlmodel(app: FastAPI):
-    model["iris_reg"] = joblib.load(MODEL_PATH1)
+    with open(MODEL_PATH1, 'rb') as file:
+        model["iris_reg"] = joblib.load(file)
     # model["iris_reg2"] = joblib.load(MODEL_PATH2)
     yield
     model.clear()
