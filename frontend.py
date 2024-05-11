@@ -18,17 +18,19 @@ def build_payload(feature1, feature2, feature3, feature4):
 async def apicall(payload, method='post', headers=None):
     async with aiohttp.ClientSession() as session:
         if method.lower() == 'get':
+            # #GET
             async with session.request(method, API_URL, params=payload, headers=headers) as response:
                 response.raise_for_status()
                 return await response.json()
         else:
+            # #POST
             async with session.request(method, API_URL, json=payload, headers=headers) as response:
                 response.raise_for_status()
                 return await response.json()
 
 
 def init(fastapi_app: FastAPI) -> None:
-    # ############################### HOMEPAGE #######################################
+    # ############################### HOMEPAGE ###############################
     @ui.page('/')
     async def home():
         ui.markdown('## IRIS Dataset')
@@ -57,12 +59,12 @@ def init(fastapi_app: FastAPI) -> None:
         ui.button('Result GET', on_click=lambda: handle_click('get'))
         markdown = ui.markdown()
 
-    # ############################### PAG2 #######################################
+    # ############################### PAG2 ###################################
     @ui.page('/pag2')
     async def page2():
         ui.label('Hello, FastAPI! Pag2')
 
-        # NOTE dark mode will be persistent for each user across tabs and server restarts
+        # NOTE dark mode will be persistent and server restarts
         ui.dark_mode().bind_value(app.storage.user, 'dark_mode')
         ui.checkbox('dark mode').bind_value(app.storage.user, 'dark_mode')
         ui.markdown('## Hello Guys, write something!!')
